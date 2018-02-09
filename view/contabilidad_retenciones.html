@@ -1,0 +1,101 @@
+{include="header"}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="page-header">
+            <h1>
+               Retenciones
+               <span class="btn-group">
+                  <a class="btn btn-xs btn-default" href="{$fsc->url()}" title="Recargar la página">
+                     <span class="glyphicon glyphicon-refresh"></span>
+                  </a>
+               </span>
+            </h1>
+            <p class="help-block">
+               Toda persona jurídica o persona natural obligada a llevar contabilidad que pague o acredite en cuenta cualquier tipo de ingreso que constituya renta gravada para quien los reciba, actuará como agente de retención del Impuesto a la Renta
+            </p>
+         </div>
+
+         <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                  <tr>
+                     <th class="text-left" width="80">Código</th>
+                     <th class="text-left">Descripción</th>
+                     <th class="text-right" width="80">Porcentaje</th>
+                     <th class="text-left" width="100">Tipo</th>
+                     <th class="text-left" width="50">Subcuenta compras {$fsc->empresa->codejercicio}</th>
+                     <th class="text-left" width="50">Subcuenta ventas {$fsc->empresa->codejercicio}</th>
+                     <th class="text-right" width="180">Acciones</th>
+                  </tr>
+               </thead>
+               {loop="$fsc->retencion->all()"}
+               <form class="form" role="form" action ="{$fsc->url()}" method="post">
+                  <input type="hidden" name="codretencion" value="{$value->codretencion}"/>
+                  <tr>
+                    <td><div class="form-control">{$value->codretencion}</div></td>
+                    <td>
+                      <input class="form-control" type="text" name="descripcion" value="{$value->descripcion}" autocomplete="off"/>
+                    </td>
+                    <td>
+                      <input class="form-control text-right" type="number" step="any" name="porcentaje" value="{$value->porcentaje}" autocomplete="off"/>
+                    </td>
+                    <td>
+                      <select class="form-control" name="tiporetencion" value="{$value->tiporetencion}" required="">
+                        <option value="">-------</option>
+                        <option value="renta" {if="$value->tiporetencion='renta'"}selected{/if}>Renta</option>
+                        <option value="iva" {if="$value->tiporetencion='iva'"}selected{/if}>Iva</option>
+                      </select>
+                    </td>
+                     <td>
+                        <input class="form-control" type="text" name="codsubcuentasop" value="{$value->codsubcuentasop}" placeholder="{$fsc->codsubcuentasop}" autocomplete="off"/>
+                     </td>
+                     <td>
+                        <input class="form-control" type="text" name="codsubcuentarep" value="{$value->codsubcuentarep}" placeholder="{$fsc->codsubcuentarep}" autocomplete="off"/>
+                     </td>
+                    <td class="text-right">
+                      <div class="btn-group">
+                         {if="$fsc->allow_delete"}
+                         <button class="btn btn-sm btn-danger" type="button" title="Eliminar" onclick="delete_retencion('{$value->codretencion}')">
+                            <span class="glyphicon glyphicon-trash"></span>
+                         </button>
+                         {/if}
+                         <button class="btn btn-sm btn-primary" type="submit" onclick="this.disabled=true;this.form.submit();" title="Guardar">
+                            <span class="glyphicon glyphicon-floppy-disk"></span>
+                         </button>
+                      </div>
+                    </td>
+                  </tr>
+               </form>
+               {/loop}
+               <form class="form" name="f_nueva_retencion" action="{$fsc->url()}" method="post">
+                  <tr class="info">
+                    <td><input class="form-control" type="text" name="codretencion" maxlength="10" placeholder="Nuevo código" autocomplete="off" required=""/></td>
+                    <td><input class="form-control" type="text" name="descripcion" placeholder="Nuevo descripción..." autocomplete="off" required=""/></td>
+                    <td><input class="form-control text-right" type="number" step="any" name="porcentaje" value="0" autocomplete="off"/></td>
+                    <td>
+                      <select class="form-control" name="tiporetencion" autocomplete="off" required="">
+                        <option value="">-------</option>
+                        <option value="renta">Renta</option>
+                        <option value="iva">Iva</option>
+                      </select>
+                    </td>
+                    <td><input class="form-control" type="text" name="codsubcuentasop" placeholder="{$fsc->codsubcuentasop}" autocomplete="off"/></td>
+                    <td><input class="form-control" type="text" name="codsubcuentarep" placeholder="{$fsc->codsubcuentarep}" autocomplete="off"/></td>
+                    <td class="text-right">
+                      <button class="btn btn-sm btn-primary" type="submit" title="Nuevo">
+                         <span class="glyphicon glyphicon-plus-sign"></span>
+                         <span class="hidden-sm">&nbsp;Nuevo</span>
+                      </button>
+                    </td>
+                  </tr>
+               </form>
+            </table>
+         </div>
+
+      </div>
+   </div>
+</div>
+
+{include="footer"}

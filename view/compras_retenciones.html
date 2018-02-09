@@ -1,0 +1,49 @@
+{include="header"}
+
+<div class="container-fluid" style="margin-bottom: 5px;">
+  <div class="row">
+      <div class="col-sm-8 col-xs-6">
+         <div class="btn-group hidden-xs">
+            <a class="btn btn-sm btn-default" href="{$fsc->url()}" title="Recargar la página">
+               <span class="glyphicon glyphicon-refresh"></span>
+            </a>
+         </div>
+         <div class="btn-group">
+            <a class="btn btn-sm btn-success" href="index.php?page=retencion_compra">
+               <span class="glyphicon glyphicon-plus"></span>
+               <span class="hidden-xs">&nbsp;Nueva</span>
+            </a>
+         </div>
+      </div>
+
+      <div class="col-sm-4 col-xs-6 text-right">
+      </div>
+  </div>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+   <li{if="$fsc->mostrar=='todo'"} class="active"{/if}>
+      <a href="{$fsc->url()}&mostrar=todo">
+         <span class="text-capitalize hidden-xs">Retenciones (todo)</span>
+         <span class="visible-xs">Todo</span>
+      </a>
+   </li>
+</ul>
+
+<div class="table-responsive">
+   <table class="table table-hover">
+      <thead>
+         <tr>
+            <th></th>
+            <th></th>
+            <th class="text-left">Retención</th>
+            <th class="text-left">Proveedor</th>
+            <th class="hidden-sm"></th>
+            <th class="text-left">Observaciones</th>
+            <th class="text-right">Total</th>
+            <th class="text-right">Fecha</th>
+         </tr>
+      </thead>
+    </table>
+  </div>
+{include="footer"}
