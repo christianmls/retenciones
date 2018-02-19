@@ -6,7 +6,7 @@
                 <h1>Paso 1:</h1>
             </div>
             <p>Selecciona una factura.</p>
-            <a href="#" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal_factura_compra">
+            <a href="#" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal_factura_venta">
                 <span class="glyphicon glyphicon-search"></span>&nbsp; Selecciona una factura
             </a>
             <div class="page-header">
@@ -21,9 +21,9 @@
     </div>
 </div>
 
-<form name="f_select_factura_compra" class="form" action="{$fsc->url()}" method="post">
+<form name="f_select_factura_venta" class="form" action="{$fsc->url()}" method="post">
     <input type="hidden" name="proveedor"/>
-    <div class="modal" id="modal_factura_compra">
+    <div class="modal" id="modal_factura_venta">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -38,7 +38,7 @@
                         <div class="input-group">
                           <select name="nuevo_tipoidfiscal" class="form-control">
                               {loop="$fsc->resultados"}
-                              <option value="{$value->codigo}">{$value->codigo} - {$value->nombre} - ${$value->total} - {$value->fecha} {$value->hora}</option>
+                              <option value="{$value->codigo}">{$value->codigo} - {$value->nombrecliente} - ${$value->total} - {$value->fecha} {$value->hora}</option>
                               {/loop}
                           </select>
                         </div>

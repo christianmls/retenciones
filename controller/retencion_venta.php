@@ -11,7 +11,7 @@
  *
  * @author Christian Puchaicela
  */
-class retencion_compra extends fs_controller
+class retencion_venta extends fs_controller
 {
   public $agente;
   public $almacenes;
@@ -37,7 +37,7 @@ class retencion_compra extends fs_controller
 
   public function __construct()
   {
-    parent::__construct(__CLASS__, 'Calcular retención', 'compras');
+    parent::__construct(__CLASS__, 'Calcular retención', 'ventas');
   }
 
   protected function private_core()
@@ -46,7 +46,7 @@ class retencion_compra extends fs_controller
 
     $this->agente = new agente();
     $this->almacenes = new almacen();
-    $this->factura = new factura_proveedor();
+    $this->factura = new factura_cliente();
     $this->serie = new serie();
 
     $this->mostrar = 'todo';
@@ -84,7 +84,7 @@ class retencion_compra extends fs_controller
         $articulo = new articulo();
         $this->articulo = $articulo->get($_GET['ref']);
 
-        $linea = new linea_factura_proveedor();
+        $linea = new linea_factura_cliente();
         $this->resultados = $linea->all_from_articulo($_GET['ref'], $this->offset);
     } else {
         $this->proveedor = FALSE;
