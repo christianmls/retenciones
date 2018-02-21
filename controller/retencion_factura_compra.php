@@ -23,8 +23,9 @@ class retencion_factura_compra extends fs_controller
     $idFactura     = strip_tags($_POST['factura_seleccionada']);
     $this->factura = new factura_proveedor();
     $this->factura = $this->factura->get($idFactura);
-    $this->lineas  = $this->db->select('SELECT * FROM lineasfacturasprov WHERE idfactura = '.$idFactura);
-    var_dump($this->lineas);
+    $this->lineas  = $this->db->select('SELECT * FROM lineasfacturasprov WHERE idfactura = '.$idFactura);  //falta hacer join para traer los valores de iva
+
+    $this->reten   = $this->db->select('SELECT * FROM retenciones_sri');
   }
 
 }
