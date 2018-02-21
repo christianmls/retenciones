@@ -37,7 +37,7 @@ class retencion_compra extends fs_controller
 
   public function __construct()
   {
-    parent::__construct(__CLASS__, 'Calcular retención', 'compras');
+   parent::__construct(__CLASS__, 'Calcular retención', 'compras', FALSE, FALSE, TRUE);
   }
 
   protected function private_core()
