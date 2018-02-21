@@ -44,10 +44,11 @@ class retencion_venta extends fs_controller
   {
     $this->mostrar  = 'todo';
 
-    $this->agente = new agente();
+    $this->agente    = new agente();
     $this->almacenes = new almacen();
-    $this->factura = new factura_cliente();
-    $this->serie = new serie();
+    $this->factura   = new factura_cliente();
+    $this->serie     = new serie();
+    $this->url       = 'index.php?page=retencion_factura_venta';
 
     $this->mostrar = 'todo';
     if (isset($_GET['mostrar'])) {

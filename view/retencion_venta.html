@@ -21,8 +21,7 @@
     </div>
 </div>
 
-<form name="f_select_factura_venta" class="form" action="{$fsc->url()}" method="post">
-    <input type="hidden" name="proveedor"/>
+<form name="f_select_factura_venta" class="form" action="{$fsc->url}" method="post">
     <div class="modal" id="modal_factura_venta">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -36,9 +35,9 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="input-group">
-                          <select name="nuevo_tipoidfiscal" class="form-control">
+                          <select name="factura_seleccionada" class="form-control">
                               {loop="$fsc->resultados"}
-                              <option value="{$value->codigo}">{$value->codigo} - {$value->nombrecliente} - ${$value->total} - {$value->fecha} {$value->hora}</option>
+                              <option value="{$value->idfactura}">{$value->codigo} - {$value->nombrecliente} - ${$value->total} - {$value->fecha} {$value->hora}</option>
                               {/loop}
                           </select>
                         </div>
