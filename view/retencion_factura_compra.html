@@ -1,30 +1,31 @@
 {include="header"}
-<div class="page-header">
+<div class="container-fluid">
+  <div class="page-header">
     <h2>Paso 2:</h2>
-</div>
-<p>Selecciona linea a linea el recargo correpondiente a la misma.</p>
-<div class="table-responsive">
+  </div>
+  <p>Selecciona linea a linea el recargo correpondiente a la misma.</p>
+  <div class="table-responsive">
     <table class="table table-hover">
         <thead>
             <tr>
-                <th class="text-left">Artículo  </th>
-                <th class="text-right">Cantidad </th>
-                <th class="text-right">Precio   </th>
-                <th class="text-right">Neto     </th>
-                <th class="text-right">IVA      </th>
-                <th class="text-right">Retención</th>
-                <th class="text-right">Total    </th>
+                <th class="text-left">  Artículo  </th>
+                <th class="text-center">Cantidad </th>
+                <th class="text-center">Precio   </th>
+                <th class="text-center">Neto     </th>
+                <th class="text-center">IVA      </th>
+                <th class="text-center">Retención</th>
+                <th class="text-center">Total    </th>
             </tr>
         </thead>
         <tbody id="lineas_documento" data-codigo="FAC2018A1">
           {loop="$fsc->lineas"}
             <tr id="" data-ref="" data-line="1">
-                <td class="text-right">{$value['descripcion']}</td>
-                <td class="text-right">{$value['cantidad']}   </td>
-                <td class="text-right">{$value['pvpunitario']}</td>
-                <td class="text-right">{$value['pvptotal']}</td>
-                <td class="text-right">{$value['iva']}</td>
-                <td class="text-right">
+                <td class="text-left">  {$value['descripcion']}</td>
+                <td class="text-center">{$value['cantidad']}   </td>
+                <td class="text-center">{$value['pvpunitario']}</td>
+                <td class="text-center">{$value['pvptotal']}</td>
+                <td class="text-center">{$value['iva']}</td>
+                <td class="text-center">
                   <select name="factura_seleccionada" class="form-control">
                     {loop="$fsc->reten"}
                     <option value="{$value['codretencion']}">{$value['descripcion']}</option>
@@ -39,19 +40,20 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th class="text-right">Retenciones</th>
-                <th class="text-right">Iva</th>
-                <th class="text-right">Total</th>
+                <th class="text-left">Retenciones</th>
+                <th class="text-center">Iva</th>
+                <th class="text-center">Total</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td id="total-retenciones" class="text-right"></td>
-                <td id="total-iva"         class="text-right"></td>
-                <td id="total"             class="text-right"></td>
+                <td id="total-retenciones" class="text-left"></td>
+                <td id="total-iva"         class="text-center"></td>
+                <td id="total"             class="text-center"></td>
             </tr>
 
         </tbody>
     </table>
+  </div>
 </div>
 {include="footer"}
