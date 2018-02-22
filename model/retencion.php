@@ -111,6 +111,16 @@ class retencion extends \fs_model
       $this->cache->delete('m_retencion_all');
   }
 
+  public function getPorcentajeRetencion($k){
+    $retenciones = $this->all();
+    
+    foreach ($retenciones as $v)
+      if ($v->codretencion == $k)
+        return $v->porcentaje;
+
+    return NULL;
+  }
+
   public function all()
   {
     /// leemos la lista de la caché

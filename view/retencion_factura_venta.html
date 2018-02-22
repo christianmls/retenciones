@@ -19,6 +19,7 @@
           </tr>
       </thead>
       <tbody id="lineas_documento">
+        <input type="hidden" name="idFactura" value="{$fsc->factura->idfactura}">
         {loop="$fsc->lineas"}
           <tr id="{$value['idlinea']}" class="linea-factura">
               <td class="text-left descripcion">{$value['descripcion']}</td>
@@ -27,7 +28,7 @@
               <td class="text-center pvptotal" data-pvptotal="{$value['pvptotal']}">${$value['pvptotal']}</td>
               <td class="text-center iva" data-iva="{$value['iva']}">{$value['iva']} %</td>
               <td class="text-center">
-                <select id="{$value['idlinea']}-retencion" data-id="{$value['idlinea']}" name="{$value['idlinea']}['retencion']" class="form-control retencion">
+                <select id="{$value['idlinea']}-retencion" data-id="{$value['idlinea']}" name="retenciones[{$value['idlinea']}][retencion]" class="form-control retencion">
                   {loop="$fsc->reten"}
                   <option value="{$value['codretencion']}" data-porcentaje="{$value['porcentaje']}">{$value['descripcion']}</option>
                   {/loop}
@@ -85,7 +86,7 @@
       subTotal      += precioTot;
       $('#'+idLinea+' .total-linea').text('$'+total);
     });
-    console.log('c');
+
     let sumatoria = totalIva + totalReten + subTotal;
     $('#totales .sub-total').text('$'+subTotal);
     $('#totales .total-retenciones').text('$'+totalReten);

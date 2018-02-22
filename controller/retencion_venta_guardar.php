@@ -20,14 +20,27 @@ class retencion_venta_guardar extends fs_controller
 
   protected function private_core()
   {
-    //obtenemos los codigos de retenciones
-    $this->reten   = $this->db->select('SELECT * FROM retenciones_sri WHERE tiporetencion = "renta"');
+    $mRetenciones = new retencion;
     //obtenemos las lineas de factura correspondientes
     if (!$this->is_assoc($_POST))
       die('Parametros incorrectos');
 
-    $lineas = $_POST;
-    var_dump($lineas);
+    $retenciones = $_POST['retenciones'];
+
+    $lineasFactura = $this->db->select('SELECT * FROM lineasfacturascli WHERE idfactura='.$_POST['idFactura']);
+
+    //hacemos las sumatorias
+    $this->sumaIva         = 0;
+    $this->sumaRetenciones = 0;
+    $this->sumaSubTotales  = 0;
+
+    foreach ($lineasFactura as $k => $v) {
+      $this->sumaSubTotales  += $v['pvptotal'];
+      $this->sumaRetenciones += $v['pvptotal']/100*$mRetenciones->getPorcentajeRetencion($retenciones[$v['idlinea']]['retencion']);
+      $this->sumaIva         += $v['pvptotal']/100*$v['iva'];
+    }
+
+    $this->total = $this->sumaSubTotales + $this->sumaRetenciones + $this->sumaIva;
   }
 
   private function is_assoc($var)
