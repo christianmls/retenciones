@@ -20,20 +20,20 @@
       </thead>
       <tbody id="lineas_documento">
         {loop="$fsc->lineas"}
-          <tr id="{$value['idlinea']}">
+          <tr id="{$value['idlinea']}" class="linea-factura">
               <td class="text-left descripcion">{$value['descripcion']}</td>
               <td class="text-center cantidad">{$value['cantidad']}   </td>
               <td class="text-center pvpunitario" data-pvpunitario="{$value['pvpunitario']}">${$value['pvpunitario']}</td>
               <td class="text-center pvptotal" data-pvptotal="{$value['pvptotal']}">${$value['pvptotal']}</td>
               <td class="text-center iva" data-iva="{$value['iva']}">{$value['iva']} %</td>
               <td class="text-center">
-                <select id="{$value['idlinea']}-retencion" name="retencion" class="form-control">
+                <select id="{$value['idlinea']}-retencion" data-id="{$value['idlinea']}" name="{$value['idlinea']}['retencion']" class="form-control retencion">
                   {loop="$fsc->reten"}
-                  <option value="{$value['codretencion']}">{$value['descripcion']}</option>
+                  <option value="{$value['codretencion']}" data-porcentaje="{$value['porcentaje']}">{$value['descripcion']}</option>
                   {/loop}
                 </select>
               </td>
-              <td class="text-center total">${$value['pvptotal'] + $value['pvptotal']/100*$value['iva']}</td>
+              <td class="text-center total-linea">${$value['pvptotal'] + $value['pvptotal']/100*$value['iva']}</td>
           </tr>
         {/loop}
       </tbody>
@@ -41,18 +41,19 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th class="text-left">Retenciones</th>
+                <th class="text-left">Sub-Total</th>
+                <th class="text-center">Retenciones</th>
                 <th class="text-center">Iva</th>
                 <th class="text-center">Total</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td id="total-retenciones" class="text-left"></td>
-                <td id="total-iva"         class="text-center"></td>
-                <td id="total"             class="text-center"></td>
+            <tr id="totales">
+                <td class="text-left sub-total"></td>
+                <td class="text-center total-retenciones"></td>
+                <td class="text-center total-iva"></td>
+                <td class="text-center total"></td>
             </tr>
-
         </tbody>
     </table>
     <div class="col-xs-12 text-right">
@@ -64,3 +65,37 @@
   </div>
 </div>
 {include="footer"}
+
+<script>
+  function calcularTotales(){
+    let totalReten = 0;
+    let totalIva   = 0;
+    let subTotal   = 0;
+
+    $('.linea-factura').each(function(k,e){
+      let idLinea    = $(e).attr('id');
+      let idSelect   = $('#'+idLinea+' .retencion').attr('id');
+      let porReten   = parseFloat($('#'+idSelect+' option:selected').attr('data-porcentaje'));
+      let precioTot  = parseFloat($('#'+idLinea+' .pvptotal').attr('data-pvptotal'));
+      let iva        = parseFloat($('#'+idLinea+' .iva').attr('data-iva'));
+
+      let total      = precioTot + (precioTot/100*porReten) + (precioTot/100*iva);
+      totalReten    += precioTot/100*porReten;
+      totalIva      += precioTot/100*iva;
+      subTotal      += precioTot;
+      $('#'+idLinea+' .total-linea').text('$'+total);
+    });
+    console.log('c');
+    let sumatoria = totalIva + totalReten + subTotal;
+    $('#totales .sub-total').text('$'+subTotal);
+    $('#totales .total-retenciones').text('$'+totalReten);
+    $('#totales .total-iva').text('$'+totalIva);
+    $('#totales .total').text('$'+sumatoria);
+  }
+
+  $(document).ready(function(){
+      calcularTotales();
+
+      $('.retencion').on('change',function(){calcularTotales();});
+  });
+</script>
