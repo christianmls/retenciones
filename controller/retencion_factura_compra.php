@@ -25,7 +25,9 @@ class retencion_factura_compra extends fs_controller
     $this->factura = $this->factura->get($idFactura);
     $this->lineas  = $this->db->select('SELECT * FROM lineasfacturasprov WHERE idfactura = '.$idFactura);  //falta hacer join para traer los valores de iva
 
-    $this->reten   = $this->db->select('SELECT * FROM retenciones_sri');
+    $this->reten   = $this->db->select('SELECT * FROM retenciones_sri WHERE tiporetencion = "renta"');
+
+    $this->urlRetenciones = 'index.php?page=retencion_compra_guardar';
   }
 
 }

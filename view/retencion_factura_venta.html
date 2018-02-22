@@ -5,6 +5,7 @@
   </div>
   <p>Selecciona linea a linea el recargo correpondiente a la misma.</p>
   <div class="table-responsive">
+    <form name="retenciones" class="form" action="{$fsc->urlRetenciones}" method="post">
     <table class="table table-hover">
       <thead>
           <tr>
@@ -17,22 +18,22 @@
               <th class="text-center">Total    </th>
           </tr>
       </thead>
-      <tbody id="lineas_documento" data-codigo="FAC2018A1">
+      <tbody id="lineas_documento">
         {loop="$fsc->lineas"}
-          <tr id="" data-ref="" data-line="1">
-              <td class="text-left">  {$value['descripcion']}</td>
-              <td class="text-center">{$value['cantidad']}   </td>
-              <td class="text-center">{$value['pvpunitario']}</td>
-              <td class="text-center">{$value['pvptotal']}</td>
-              <td class="text-center">{$value['iva']}</td>
+          <tr id="{$value['idlinea']}">
+              <td class="text-left descripcion">{$value['descripcion']}</td>
+              <td class="text-center cantidad">{$value['cantidad']}   </td>
+              <td class="text-center pvpunitario" data-pvpunitario="{$value['pvpunitario']}">${$value['pvpunitario']}</td>
+              <td class="text-center pvptotal" data-pvptotal="{$value['pvptotal']}">${$value['pvptotal']}</td>
+              <td class="text-center iva" data-iva="{$value['iva']}">{$value['iva']} %</td>
               <td class="text-center">
-                <select name="factura_seleccionada" class="form-control">
+                <select id="{$value['idlinea']}-retencion" name="retencion" class="form-control">
                   {loop="$fsc->reten"}
                   <option value="{$value['codretencion']}">{$value['descripcion']}</option>
                   {/loop}
                 </select>
               </td>
-              <td class="text-right"></td>
+              <td class="text-center total">${$value['pvptotal'] + $value['pvptotal']/100*$value['iva']}</td>
           </tr>
         {/loop}
       </tbody>
@@ -54,6 +55,12 @@
 
         </tbody>
     </table>
+    <div class="col-xs-12 text-right">
+      <button class="btn btn-sm btn-primary" type="submit">
+        <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Guardar
+      </button>
+    </div>
+    </form>
   </div>
 </div>
 {include="footer"}
