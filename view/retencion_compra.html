@@ -34,6 +34,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                      <div class="input-group">
+                          <input class="form-control" type="text" name="ac_proveedor" id="ac_proveedor" placeholder="Filtro proveedores" autocomplete="off"/>
+                          <span class="input-group-btn">
+                              <button class="btn btn-primary" type="submit" onclick="">
+                                  <span class="glyphicon glyphicon-share-alt"></span>
+                              </button>
+                          </span>
+                      </div>
+                    </div>
+                    <div class="form-group">
                         <div class="input-group">
                           <select name="factura_seleccionada" class="form-control">
                               {loop="$fsc->resultados"}
