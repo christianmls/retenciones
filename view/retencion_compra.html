@@ -20,8 +20,40 @@
         </div>
     </div>
 </div>
+<script>
+  $(document).ready(function () {
+      document.f_select_factura_compra.ac_proveedor.focus();
+      $("#ac_proveedor").autocomplete({
+          serviceUrl: '{$fsc->urlProb}',
+          paramName: 'buscar_proveedor',
+          onSelect: function (suggestion) {
+              if (suggestion) {
+                  if (document.f_select_factura_compra.proveedor.value != suggestion.data) {
+                      document.f_select_factura_compra.proveedor.value = suggestion.data;
+                      actualizarSelect(suggestion.data);
+                  }
+              }
+          }
+      });
 
+      function actualizarSelect(id){
+        $.get('{$fsc->urlFacturas}',function(data){
+          let html = '';
+          for (let d in data){
+            html += '<option value="'+data[d].idfactura+'">'+data[d].codigo+' - '+data[d].nombre+' - '+data[d].fecha+' - '+data[d].hora+'</option>';
+          }
+          $("#factura_select").html(html);
+
+          if(html!=''){
+            $("#factura_select").prop('disabled', false);
+            $("#submit-btn").prop('disabled', false);
+          }
+        });
+      }
+  });
+</script>
 <form name="f_select_factura_compra" class="form" action="{$fsc->url}" method="post">
+    <input type="hidden" name="proveedor"/>
     <div class="modal" id="modal_factura_compra">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -37,7 +69,7 @@
                       <div class="input-group">
                           <input class="form-control" type="text" name="ac_proveedor" id="ac_proveedor" placeholder="Filtro proveedores" autocomplete="off"/>
                           <span class="input-group-btn">
-                              <button class="btn btn-primary" type="submit" onclick="">
+                              <button class="btn btn-primary" type="button" onclick="actualizarSelect()">
                                   <span class="glyphicon glyphicon-share-alt"></span>
                               </button>
                           </span>
@@ -45,10 +77,8 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                          <select name="factura_seleccionada" class="form-control">
-                              {loop="$fsc->resultados"}
-                              <option value="{$value->idfactura}">{$value->codigo} - {$value->nombre} - ${$value->total} - {$value->fecha} {$value->hora}</option>
-                              {/loop}
+                          <select id="factura_select" name="factura_seleccionada" class="form-control" disabled>
+                              <option value="0">No se seleccionó ningún proveedor</option>
                           </select>
                         </div>
                     </div>
@@ -56,7 +86,7 @@
                 <div class="modal-body bg-info">
                     <div class="row">
                       <div class="col-sm-5 text-right">
-                          <button class="btn btn-sm btn-primary" type="submit">
+                          <button class="btn btn-sm btn-primary" type="submit" id="submit-btn" disabled>
                               <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Seleccionar
                           </button>
                       </div>

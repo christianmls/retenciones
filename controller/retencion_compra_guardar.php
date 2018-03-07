@@ -21,10 +21,7 @@ class retencion_compra_guardar extends fs_controller
   protected function private_core()
   {
     $mRetenciones = new retencion;
-    //obtenemos las lineas de factura correspondientes
-    if (!$this->is_assoc($_POST))
-      die('Parametros incorrectos');
-
+    
     $retenciones = $_POST['retenciones'];
 
     $lineasFactura = $this->db->select('SELECT * FROM lineasfacturasprov WHERE idfactura='.$_POST['idFactura']);

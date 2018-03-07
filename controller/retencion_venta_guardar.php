@@ -22,9 +22,7 @@ class retencion_venta_guardar extends fs_controller
   {
     $mRetenciones = new retencion;
     //obtenemos las lineas de factura correspondientes
-    if (!$this->is_assoc($_POST))
-      die('Parametros incorrectos');
-
+    
     $retenciones = $_POST['retenciones'];
 
     $lineasFactura = $this->db->select('SELECT * FROM lineasfacturascli WHERE idfactura='.$_POST['idFactura']);

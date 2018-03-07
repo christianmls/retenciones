@@ -11,7 +11,8 @@
  *
  * @author Christian Puchaicela
  */
-class retencion_venta extends fs_controller
+require_once 'plugins/facturacion_base/extras/fbase_controller.php';
+class retencion_venta extends fbase_controller
 {
   public $agente;
   public $almacenes;
@@ -37,7 +38,7 @@ class retencion_venta extends fs_controller
 
   public function __construct()
   {
-    parent::__construct(__CLASS__, 'Calcular retención', 'ventas', FALSE, FALSE, TRUE);
+    parent::__construct(__CLASS__);
   }
 
   protected function private_core()
