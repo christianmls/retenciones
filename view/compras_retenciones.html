@@ -43,6 +43,20 @@
             <th class="text-right">Fecha</th>
          </tr>
       </thead>
+      <tbody>
+        {loop="$fsc->retenciones"}
+        <tr>
+           <th></th>
+           <th></th>
+           <th class="text-left">{$value['tipo_retencion']}</th>
+           <th class="text-left">{$value['nombre_prov']}</th>
+           <th class="hidden-sm"></th>
+           <th class="text-left"></th>
+           <th class="text-right">{$value['total_retencion']}</th>
+           <th class="text-right">{$value['fecha_emision']}</th>
+        </tr>
+        {/loop}
+      </tbody>
     </table>
   </div>
 {include="footer"}

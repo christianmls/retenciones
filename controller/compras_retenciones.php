@@ -23,5 +23,9 @@ class compras_retenciones extends fs_controller
   protected function private_core()
   {
     $this->mostrar = 'todo';
+    $retencionesModel = new retenciones_factura_compra();
+
+    $this->retenciones = $retencionesModel->getAll();
+    
   }
 }

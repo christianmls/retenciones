@@ -4,15 +4,15 @@
 */
 class retenciones_factura_compra extends \fs_model {
 
-   private $id;
-   private $factura;
-   private $numero;
-   private $serie;
-   private $fecha_emision;
-   private $total;
-   private $tipo_retencion;
-   private $porcentaje;
-   private $observaciones;
+   public $id;
+   public $factura;
+   public $numero=' ';
+   public $serie=' ';
+   public $fecha_emision;
+   public $total;
+   public $tipo_retencion;
+   public $porcentaje;
+   public $observaciones;
 
    public function __construct($data = FALSE) {
       parent::__construct('retenciones_factura_compra');
@@ -31,13 +31,13 @@ class retenciones_factura_compra extends \fs_model {
    public function clear() {
       $this->id = '';
       $this->factura = '';
-      $this->numero = '';
-      $this->serie = '';
+      $this->numero = ' ';
+      $this->serie = ' ';
       $this->fecha_emision = '';
       $this->total = '';
       $this->tipo_retencion = '';
       $this->porcentaje = '';
-      $this->observaciones = '';
+      $this->observaciones = ' ';
    }
 
    public function load_from_data($data) {
@@ -54,6 +54,13 @@ class retenciones_factura_compra extends \fs_model {
 
    public function install() {
       return '';
+   }
+
+   public function getAll(){
+     return $this->db->select(
+       'SELECT a.total AS total_retencion, a.tipo_retencion, a.fecha_emision, c.nombre AS nombre_prov FROM retenciones_factura_compra a
+       INNER JOIN facturasprov b ON a.factura = b.idfactura
+       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor');
    }
 
    protected function test() {
@@ -74,7 +81,12 @@ class retenciones_factura_compra extends \fs_model {
    }
 
    public function save(){
-
+     $sql = 'INSERT INTO retenciones_factura_compra '
+             . '(factura,numero,serie,fecha_emision,total,tipo_retencion,porcentaje,observaciones)'
+             . ' VALUES '
+             . '('.$this->factura.',"'.$this->numero.'","'.$this->serie.'","'.$this->fecha_emision.'",'.
+             $this->total.',"'.$this->tipo_retencion.'",'.$this->porcentaje.',"'.$this->observaciones.'")';
+     return $this->db->exec($sql);
    }
 
    protected function update() {
@@ -82,15 +94,6 @@ class retenciones_factura_compra extends \fs_model {
               . '  field1 = value1'
               . ', fieldN = valueN'
               . ' WHERE field_key1 = key_value1;';
-
-      return $this->db->exec($sql);
-   }
-
-   protected function insert() {
-      $sql = 'INSERT INTO retenciones_factura_compra '
-              . '(id,factura,numero,serie,fecha_emision,total,tipo_retencion,porcentaje,observaciones)'
-              . ' VALUES '
-              . '(...);';
 
       return $this->db->exec($sql);
    }

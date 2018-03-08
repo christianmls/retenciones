@@ -18,11 +18,11 @@
 
   <columna> <nombre>total</nombre> <tipo>double</tipo> <nulo>NO</nulo></columna>
 
-  <columna> <nombre>tipo_retencion</nombre> <tipo>integer</tipo> <nulo>NO</nulo></columna>
+  <columna> <nombre>tipo_retencion</nombre> <tipo>varchar(50)</tipo> <nulo>NO</nulo></columna>
 
   <columna> <nombre>porcentaje</nombre> <tipo>double</tipo> <nulo>NO</nulo> </columna>
 
-  <columna> <nombre>observaciones</nombre> <tipo>integer</tipo> <nulo>NO</nulo> </columna>
+  <columna> <nombre>observaciones</nombre> <tipo>varchar(50)</tipo> <nulo>NO</nulo> </columna>
 
   <restriccion> <nombre>retenciones_factura_compra_pkey</nombre> <consulta>PRIMARY KEY (id)</consulta></restriccion>
 </tabla>
