@@ -48,18 +48,18 @@ class retencion_venta extends fbase_controller
         $this->mostrar = $_GET['mostrar'];
     }
 
-    $this->urlClient    = 'index.php?page=retencion_venta';
+    $this->url         = 'index.php?page=retencion_factura_venta';
+    $this->urlClient   = 'index.php?page=retencion_venta';
     $this->urlFacturas = 'index.php?page=retencion_venta&mostrar=resultados';
 
+    if (isset($_REQUEST['buscar_cliente']))
+        $this->fbase_buscar_cliente($_REQUEST['buscar_cliente']);
 
     if ($this->mostrar == 'resultados'){
       $this->agente      = new agente();
       $this->almacenes   = new almacen();
       $this->factura     = new factura_cliente();
       $this->serie       = new serie();
-      $this->url         = 'index.php?page=retencion_factura_venta';
-      if (isset($_REQUEST['buscar_cliente']))
-          $this->fbase_buscar_cliente($_REQUEST['buscar_cliente']);
 
       $this->offset = 0;
       if (isset($_GET['offset'])) {

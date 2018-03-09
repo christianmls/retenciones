@@ -27,9 +27,9 @@
             paramName: 'buscar_cliente',
             onSelect: function (suggestion) {
                 if (suggestion) {
-                    if (document.f_nueva_venta.cliente.value != suggestion.data) {
-                        document.f_nueva_venta.cliente.value = suggestion.data;
-                      //  actualizarSelect(suggestion.data);
+                    if (document.f_select_factura_venta.cliente.value != suggestion.data) {
+                        document.f_select_factura_venta.cliente.value = suggestion.data;
+                        actualizarSelect(suggestion.data);
                     }
                 }
             }
@@ -39,7 +39,7 @@
           $.get('{$fsc->urlFacturas}',function(data){
             let html = '';
             for (let d in data){
-              html += '<option value="'+data[d].idfactura+'">'+data[d].codigo+' - '+data[d].nombre+' - '+data[d].fecha+' - '+data[d].hora+'</option>';
+              html += '<option value="'+data[d].idfactura+'">'+data[d].codigo+' - '+data[d].nombrecliente+' - '+data[d].fecha+' - '+data[d].hora+'</option>';
             }
             $("#factura_select").html(html);
 
@@ -52,6 +52,7 @@
     });
 </script>
 <form name="f_select_factura_venta" class="form" action="{$fsc->url}" method="post">
+    <input type="hidden" name="cliente"/>
     <div class="modal" id="modal_factura_venta">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -67,7 +68,7 @@
                   <div class="input-group">
                       <input class="form-control" type="text" name="ac_cliente" id="ac_cliente" placeholder="Filtro clientes" autocomplete="off"/>
                       <span class="input-group-btn">
-                          <button class="btn btn-primary" type="button" onclick="">
+                          <button class="btn btn-primary" type="button" onclick="actualizarSelect()">
                               <span class="glyphicon glyphicon-share-alt"></span>
                           </button>
                       </span>
@@ -77,7 +78,7 @@
                     <div class="form-group">
                         <div class="input-group">
                           <select id="factura_select" name="factura_seleccionada" class="form-control" disabled>
-                              <option value="0">No se seleccionó ningún cliente</option>
+                              <option value="0">No hay facturas</option>
                           </select>
                         </div>
                     </div>

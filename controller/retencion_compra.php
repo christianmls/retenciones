@@ -49,8 +49,7 @@ class retencion_compra extends fbase_controller
     $this->url         = 'index.php?page=retencion_factura_compra';
     $this->urlProb     = 'index.php?page=retencion_compra';
     $this->urlFacturas = 'index.php?page=retencion_compra&mostrar=resultados';
-    //$lineasRetencion = new retenciones_factura_compra();
-
+    
     if (isset($_REQUEST['buscar_proveedor']))
         $this->fbase_buscar_proveedor($_REQUEST['buscar_proveedor']);
 
