@@ -125,7 +125,13 @@ class retencion_venta extends fbase_controller
               $order2 = ', hora ASC, numero ASC';
           }
 
-          $this->resultados = $this->factura->all($this->offset, FS_ITEM_LIMIT, $this->order . $order2);
+          if (isset($_GET['id_cliente'])){
+            $cliente = $_GET['id_cliente'];
+            $this->resultados = $this->factura->all_from_cliente($cliente,$this->offset);
+          } else {
+            $this->resultados = $this->factura->all_from_cliente($this->offset, FS_ITEM_LIMIT, $this->order . $order2);
+          }
+        
           $this->template = FALSE;
           header('Content-Type: application/json');
           echo json_encode($this->resultados);

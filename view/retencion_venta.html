@@ -36,7 +36,7 @@
         });
 
         function actualizarSelect(id){
-          $.get('{$fsc->urlFacturas}',function(data){
+          $.get('{$fsc->urlFacturas}&id_cliente='+document.f_select_factura_venta.cliente.value,function(data){
             let html = '';
             for (let d in data){
               html += '<option value="'+data[d].idfactura+'">'+data[d].codigo+' - '+data[d].nombrecliente+' - '+data[d].fecha+' - '+data[d].hora+'</option>';

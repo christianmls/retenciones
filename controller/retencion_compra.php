@@ -49,7 +49,7 @@ class retencion_compra extends fbase_controller
     $this->url         = 'index.php?page=retencion_factura_compra';
     $this->urlProb     = 'index.php?page=retencion_compra';
     $this->urlFacturas = 'index.php?page=retencion_compra&mostrar=resultados';
-    
+
     if (isset($_REQUEST['buscar_proveedor']))
         $this->fbase_buscar_proveedor($_REQUEST['buscar_proveedor']);
 
@@ -100,7 +100,12 @@ class retencion_compra extends fbase_controller
         $order2 = ', hora ASC, numero ASC';
       }
 
-      $this->resultados = $this->factura->all($this->offset, FS_ITEM_LIMIT, $this->order . $order2);
+      if(isset($_GET['id_proveedor'])){
+        $prov = $_GET['id_proveedor'];
+        $this->resultados = $this->factura->all_from_proveedor($prov, $this->offset);
+      } else {
+        $this->resultados = $this->factura->all($this->offset, FS_ITEM_LIMIT, $this->order . $order2);
+      }
 
       $this->template = FALSE;
       header('Content-Type: application/json');

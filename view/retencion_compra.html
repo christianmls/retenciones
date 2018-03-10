@@ -37,7 +37,7 @@
       });
 
       function actualizarSelect(id){
-        $.get('{$fsc->urlFacturas}',function(data){
+        $.get('{$fsc->urlFacturas}&id_proveedor='+document.f_select_factura_compra.proveedor.value,function(data){
           let html = '';
           for (let d in data){
             html += '<option value="'+data[d].idfactura+'">'+data[d].codigo+' - '+data[d].nombre+' - '+data[d].fecha+' - '+data[d].hora+'</option>';
