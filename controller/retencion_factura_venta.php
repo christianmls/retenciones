@@ -25,10 +25,17 @@ class retencion_factura_venta extends fs_controller
     $this->factura = new factura_cliente();
     $this->factura = $this->factura->get($idFactura);
     $this->lineas  = $this->db->select('SELECT * FROM lineasfacturascli WHERE idfactura = '.$idFactura); //falta hacer join para traer los valores de iva
-
     $this->reten   = $this->db->select('SELECT * FROM retenciones_sri WHERE tiporetencion = "renta"');
 
     $this->urlRetenciones = 'index.php?page=retencion_venta_guardar';
+
+    $this->retencionHecha = false;
+
+    //comprobamos si ya se hizo una retencion
+    $modelRetenciones = new retenciones_factura_venta();
+    if (count($modelRetenciones->getAllByFactura($idFactura))>0){
+      $this->retencionHecha = true;
+    }
   }
 
 }

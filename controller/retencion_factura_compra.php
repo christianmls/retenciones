@@ -28,6 +28,12 @@ class retencion_factura_compra extends fs_controller
     $this->reten   = $this->db->select('SELECT * FROM retenciones_sri WHERE tiporetencion = "renta"');
 
     $this->urlRetenciones = 'index.php?page=retencion_compra_guardar';
+
+    //comprobamos si ya se hizo una retencion
+    $modelRetenciones = new retenciones_factura_compra();
+    if (count($modelRetenciones->getAllByFactura($idFactura))>0){
+      $this->retencionHecha = true;
+    }
   }
 
 }

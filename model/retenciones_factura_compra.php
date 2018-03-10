@@ -63,6 +63,14 @@ class retenciones_factura_compra extends \fs_model {
        INNER JOIN proveedores c ON b.codproveedor = c.codproveedor');
    }
 
+   public function getAllByFactura($id_factura){
+     return $this->db->select(
+       'SELECT a.total AS total_retencion, a.tipo_retencion, a.fecha_emision, c.nombre AS nombre_prov FROM retenciones_factura_compra a
+       INNER JOIN facturasprov b ON a.factura = b.idfactura
+       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor WHERE b.idfactura = '.$id_factura);
+   }
+
+
    protected function test() {
       /*
         PUT HERE MODEL DATA VALIDATIONS
