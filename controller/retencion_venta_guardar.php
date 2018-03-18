@@ -5,12 +5,6 @@
  * @copyright 2017, InfinityCSoft. All Rights Reserved.
  */
 
-
-/**
- * Description of retenciones
- *
- * @author Christian Puchaicela
- */
 class retencion_venta_guardar extends fs_controller
 {
   public function __construct()
@@ -37,17 +31,24 @@ class retencion_venta_guardar extends fs_controller
       $this->sumaRetenciones += $v['pvptotal']/100*$mRetenciones->getPorcentajeRetencion($retenciones[$v['idlinea']]['retencion']);
       $this->sumaIva         += $v['pvptotal']/100*$v['iva'];
 
-      $modelRetencionVenta = new retenciones_factura_compra();
-      $modelRetencionVenta->factura        = $_POST['idFactura'];
-      $modelRetencionVenta->porcentaje     = $mRetenciones->getPorcentajeRetencion($retenciones[$v['idlinea']]['retencion']);
-      $modelRetencionVenta->fecha_emision  = $factura[0]['fecha'];
-      $modelRetencionVenta->serie          = $factura[0]['codserie'];
-      $modelRetencionVenta->total          = $v['pvptotal']/100*$mRetenciones->getPorcentajeRetencion($retenciones[$v['idlinea']]['retencion']);
-      $modelRetencionVenta->tipo_retencion = $retenciones[$v['idlinea']]['retencion'];
-      $modelRetencionVenta->save();
+      $lineaRetencion = new retenciones_lineas_venta();
+      $lineaRetencion->factura        = $_POST['idFactura'];
+      $lineaRetencion->porcentaje     = $mRetenciones->getPorcentajeRetencion($retenciones[$v['idlinea']]['retencion']);
+      $lineaRetencion->fecha_emision  = $factura[0]['fecha'];
+      $lineaRetencion->serie          = $factura[0]['codserie'];
+      $lineaRetencion->total          = $v['pvptotal']/100*$mRetenciones->getPorcentajeRetencion($retenciones[$v['idlinea']]['retencion']);
+      $lineaRetencion->tipo_retencion = $retenciones[$v['idlinea']]['retencion'];
+      $lineaRetencion->save();
     }
 
-    $this->total = $this->sumaSubTotales + $this->sumaRetenciones + $this->sumaIva;
+    $this->total    = $this->sumaSubTotales + $this->sumaRetenciones + $this->sumaIva;
+
+    $totalRetencion                 = new retenciones_factura_venta();
+    $totalRetencion->factura        = $_POST['idFactura'];
+    $totalRetencion->serie          = $factura[0]['codserie'];
+    $totalRetencion->fecha_emision  = $factura[0]['fecha'];
+    $totalRetencion->total_retenido = $this->total;
+    $totalRetencion->save();
   }
 
   private function is_assoc($var)

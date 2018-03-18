@@ -2,17 +2,19 @@
 /**
  * @author Christian Puchaicela <christianmls@hotmail.com>
 */
-class retenciones_factura_venta extends \fs_model {
+class retenciones_lineas_venta extends \fs_model {
 
    public $id;
    public $factura;
    public $numero;
    public $serie;
    public $fecha_emision;
-   public $total_retenido;
+   public $total;
+   public $tipo_retencion;
+   public $porcentaje;
 
    public function __construct($data = FALSE) {
-      parent::__construct('retenciones_factura_venta');
+      parent::__construct('retenciones_lineas_venta');
 
       if ($data) {
          $this->load_from_data($data);
@@ -23,18 +25,16 @@ class retenciones_factura_venta extends \fs_model {
 
    public function getAll(){
      return $this->db->select(
-       'SELECT a.total_retenido, a.fecha_emision, c.nombre AS nombre_prov, b.codserie,b.codigo
-       FROM retenciones_factura_venta a
-       INNER JOIN facturasprov b ON a.factura = b.idfactura
-       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor');
+       'SELECT a.total AS total_retencion,b.nombrecliente, a.tipo_retencion, b.fecha
+       FROM retenciones_lineas_venta a
+       INNER JOIN facturascli b ON a.factura = b.idfactura');
    }
 
    public function getAllByFactura($id_factura){
      return $this->db->select(
-       'SELECT a.total_retenido, a.fecha_emision, c.nombre AS nombre_prov, b.codserie,b.codigo
-       FROM retenciones_factura_venta a
-       INNER JOIN facturasprov b ON a.factura = b.idfactura
-       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor WHERE b.idfactura = '.$id_factura);
+       'SELECT a.total AS total_retencion,b.nombrecliente, a.tipo_retencion, b.fecha
+       FROM retenciones_lineas_venta a
+       INNER JOIN facturascli b ON a.factura = b.idfactura WHERE b.idfactura = '.$id_factura);
    }
 
    public function exists() {
@@ -42,12 +42,14 @@ class retenciones_factura_venta extends \fs_model {
    }
 
    public function clear() {
-      $this->id             = '';
-      $this->factura        = '';
-      $this->numero         = '';
-      $this->serie          = '';
-      $this->fecha_emision  = '';
-      $this->total_retenido = '';
+      $this->id = '';
+      $this->factura = '';
+      $this->numero = '';
+      $this->serie = '';
+      $this->fecha_emision = '';
+      $this->total = '';
+      $this->tipo_retencion = '';
+      $this->porcentaje = '';
    }
 
    public function load_from_data($data) {
@@ -56,7 +58,8 @@ class retenciones_factura_venta extends \fs_model {
       $this->numero         = $data['numero'];
       $this->serie          = $data['serie'];
       $this->fecha_emision  = $data['fecha_emision'];
-      $this->total_retenido = $data['total_retenido'];
+      $this->total          = $data['total'];
+      $this->tipo_retencion = $data['tipo_retencion'];
       $this->porcentaje     = $data['porcentaje'];
    }
 
@@ -74,11 +77,11 @@ class retenciones_factura_venta extends \fs_model {
    }
 
    public function save(){
-     $sql = 'INSERT INTO retenciones_factura_venta '
-             . '(factura,numero,serie,fecha_emision,total_retenido)'
+     $sql = 'INSERT INTO retenciones_lineas_venta '
+             . '(factura,numero,serie,fecha_emision,total,tipo_retencion,porcentaje)'
              . ' VALUES '
-             . '("'.$this->factura.'","'.$this->numero.'","'.$this->serie.'","'.$this->fecha_emision.'","'.
-             $this->total_retenido.'")';
+             . '('.$this->factura.',"'.$this->numero.'","'.$this->serie.'","'.$this->fecha_emision.'",'.
+             $this->total.',"'.$this->tipo_retencion.'",'.$this->porcentaje.')';
      return $this->db->exec($sql);
    }
 
@@ -93,7 +96,7 @@ class retenciones_factura_venta extends \fs_model {
 
    public function insert() {
       $sql = 'INSERT INTO retenciones_factura_venta '
-              . '(id,factura,numero,serie,fecha_emision,total_retenido)'
+              . '(id,factura,numero,serie,fecha_emision,total,tipo_retencion,porcentaje)'
               . ' VALUES '
               . '(...);';
 

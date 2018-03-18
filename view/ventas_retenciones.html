@@ -22,11 +22,11 @@
 </div>
 
 <ul class="nav nav-tabs" role="tablist">
-   <li{if="$fsc->mostrar=='todo'"} class="active"{/if}>
-      <a href="{$fsc->url()}&mostrar=todo">
-         <span class="text-capitalize hidden-xs">Retenciones (todo)</span>
-         <span class="visible-xs">Todo</span>
-      </a>
+  <li{if="$fsc->mostrar=='facturas'"} class="active"{/if}>
+     <a hrsef="{$fsc->url()}&mostrar=facturas">
+        <span class="text-capitalize hidden-xs">Retenciones (Facturas)</span>
+        <span class="visible-xs">Facturas</span>
+     </a>
    </li>
 </ul>
 
@@ -34,27 +34,29 @@
    <table class="table table-hover">
       <thead>
          <tr>
-            <th></th>
-            <th></th>
-            <th class="text-left">Retención</th>
-            <th class="text-left">Proveedor</th>
-            <th class="hidden-sm"></th>
-            <th class="text-left">Observaciones</th>
-            <th class="text-right">Total</th>
-            <th class="text-right">Fecha</th>
+           <th class="text-left">Factura</th>
+           <th class="text-left">Proveedor</th>
+           <th class="text-right">Fecha</th>
+           <th class="text-right">Total retenciones</th>
+           <th class="text-right">Acciones</th>
          </tr>
       </thead>
       <tbody>
         {loop="$fsc->retenciones"}
         <tr>
-           <th></th>
-           <th></th>
-           <th class="text-left">{$value['tipo_retencion']}</th>
-           <th class="text-left">{$value['nombrecliente']}</th>
-           <th class="hidden-sm"></th>
-           <th class="text-left"></th>
-           <th class="text-right">{$value['total_retencion']}</th>
-           <th class="text-right">{$value['fecha']}</th>
+          <th class="text-left">{$value['codigo']}</th>
+          <th class="text-left">{$value['nombre_prov']}</th>
+          <th class="text-right">{$value['fecha_emision']}</th>
+          <th class="text-right">$ {$value['total_retenido']}</th>
+           <th class="text-right">
+             <div class="btn-group">
+                {if="$fsc->allow_edit"}
+                <button class="btn btn-sm btn-primary" title="Editar">
+                   <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                {/if}
+             </div>
+           </th>
         </tr>
         {/loop}
       </tbody>

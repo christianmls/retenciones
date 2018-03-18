@@ -6,13 +6,10 @@ class retenciones_factura_compra extends \fs_model {
 
    public $id;
    public $factura;
-   public $numero=' ';
-   public $serie=' ';
+   public $numero;
+   public $serie;
    public $fecha_emision;
-   public $total;
-   public $tipo_retencion;
-   public $porcentaje;
-   public $observaciones;
+   public $total_retenido;
 
    public function __construct($data = FALSE) {
       parent::__construct('retenciones_factura_compra');
@@ -29,27 +26,21 @@ class retenciones_factura_compra extends \fs_model {
    }
 
    public function clear() {
-      $this->id = '';
-      $this->factura = '';
-      $this->numero = ' ';
-      $this->serie = ' ';
-      $this->fecha_emision = '';
-      $this->total = '';
-      $this->tipo_retencion = '';
-      $this->porcentaje = '';
-      $this->observaciones = ' ';
+      $this->id             = '';
+      $this->factura        = '';
+      $this->numero         = ' ';
+      $this->serie          = ' ';
+      $this->fecha_emision  = '';
+      $this->total_retenido = '';
    }
 
    public function load_from_data($data) {
-      $this->id = $data['id'];
-      $this->factura = $data['factura'];
-      $this->numero = $data['numero'];
-      $this->serie = $data['serie'];
-      $this->fecha_emision = $data['fecha_emision'];
-      $this->total = $data['total'];
-      $this->tipo_retencion = $data['tipo_retencion'];
-      $this->porcentaje = $data['porcentaje'];
-      $this->observaciones = $data['observaciones'];
+      $this->id             = $data['id'];
+      $this->factura        = $data['factura'];
+      $this->numero         = $data['numero'];
+      $this->serie          = $data['serie'];
+      $this->fecha_emision  = $data['fecha_emision'];
+      $this->total_retenido = $data['total_retenido'];
    }
 
    public function install() {
@@ -58,29 +49,23 @@ class retenciones_factura_compra extends \fs_model {
 
    public function getAll(){
      return $this->db->select(
-       'SELECT a.total AS total_retencion, a.tipo_retencion, a.fecha_emision, c.nombre AS nombre_prov FROM retenciones_factura_compra a
+       'SELECT a.total_retenido, a.fecha_emision, c.nombre AS nombre_prov, b.codserie,b.codigo
+       FROM retenciones_factura_compra a
        INNER JOIN facturasprov b ON a.factura = b.idfactura
        INNER JOIN proveedores c ON b.codproveedor = c.codproveedor');
    }
 
    public function getAllByFactura($id_factura){
      return $this->db->select(
-       'SELECT a.total AS total_retencion, a.tipo_retencion, a.fecha_emision, c.nombre AS nombre_prov FROM retenciones_factura_compra a
+       'SELECT a.total_retenido, a.fecha_emision, c.nombre AS nombre_prov, b.codserie,b.codigo
+       FROM retenciones_factura_compra a
        INNER JOIN facturasprov b ON a.factura = b.idfactura
        INNER JOIN proveedores c ON b.codproveedor = c.codproveedor WHERE b.idfactura = '.$id_factura);
    }
 
 
    protected function test() {
-      /*
-        PUT HERE MODEL DATA VALIDATIONS
-        EXAMPLE:
-        if($this->field_Numeric == 0) {
-        $this->new_error_msg('Must be inform a code value');
-        return FALSE;
-        }
-        return TRUE;
-       */
+
       return parent::test();
    }
 
@@ -90,10 +75,10 @@ class retenciones_factura_compra extends \fs_model {
 
    public function save(){
      $sql = 'INSERT INTO retenciones_factura_compra '
-             . '(factura,numero,serie,fecha_emision,total,tipo_retencion,porcentaje,observaciones)'
+             . '(factura,numero,serie,fecha_emision,total_retenido)'
              . ' VALUES '
-             . '('.$this->factura.',"'.$this->numero.'","'.$this->serie.'","'.$this->fecha_emision.'",'.
-             $this->total.',"'.$this->tipo_retencion.'",'.$this->porcentaje.',"'.$this->observaciones.'")';
+             . '('.$this->factura.',"'.$this->numero.'","'.$this->serie.'","'.$this->fecha_emision.'","'.
+             $this->total_retenido.'")';
      return $this->db->exec($sql);
    }
 

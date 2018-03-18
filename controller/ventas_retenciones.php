@@ -20,9 +20,10 @@ class ventas_retenciones extends fs_controller
 
    protected function private_core()
    {
-      $this->mostrar = 'todo';
+      $this->mostrar = 'facturas';
       $retencionesModel = new retenciones_factura_venta();
 
-      $this->retenciones = $retencionesModel->getAll();
+      $this->retenciones  = $retencionesModel->getAll();
+      $this->allow_edit   = true;
    }
 }

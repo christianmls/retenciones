@@ -30,7 +30,9 @@ class retencion_factura_compra extends fs_controller
     $this->urlRetenciones = 'index.php?page=retencion_compra_guardar';
 
     //comprobamos si ya se hizo una retencion
-    $modelRetenciones = new retenciones_factura_compra();
+    $modelRetenciones = new retenciones_lineas_compra();
+
+    $this->retencionHecha = false;
     if (count($modelRetenciones->getAllByFactura($idFactura))>0){
       $this->retencionHecha = true;
     }

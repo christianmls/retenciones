@@ -5,12 +5,6 @@
  * @copyright 2017, InfinityCSoft. All Rights Reserved.
  */
 
-
-/**
- * Description of retenciones
- *
- * @author Christian Puchaicela
- */
 class retencion_factura_venta extends fs_controller
 {
 
@@ -29,10 +23,9 @@ class retencion_factura_venta extends fs_controller
 
     $this->urlRetenciones = 'index.php?page=retencion_venta_guardar';
 
-    $this->retencionHecha = false;
-
     //comprobamos si ya se hizo una retencion
-    $modelRetenciones = new retenciones_factura_venta();
+    $modelRetenciones = new retenciones_lineas_venta();
+    $this->retencionHecha = false;
     if (count($modelRetenciones->getAllByFactura($idFactura))>0){
       $this->retencionHecha = true;
     }
