@@ -64,16 +64,16 @@ class retenciones_factura_venta extends \fs_model {
      return $this->db->select(
        'SELECT a.total_retenido, a.fecha_emision, c.nombre AS nombre_prov, b.codserie,b.codigo
        FROM retenciones_factura_venta a
-       INNER JOIN facturasprov b ON a.factura = b.idfactura
-       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor ORDER BY a.id '.$this->getLimitOffset());
+       INNER JOIN facturascli b ON a.factura = b.idfactura
+       INNER JOIN clientes c ON b.codcliente = c.codcliente ORDER BY a.id '.$this->getLimitOffset());
    }
 
    public function getAllByFactura($id_factura){
      return $this->db->select(
        'SELECT a.total_retenido, a.fecha_emision, c.nombre AS nombre_prov, b.codserie,b.codigo
        FROM retenciones_factura_venta a
-       INNER JOIN facturasprov b ON a.factura = b.idfactura
-       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor WHERE b.idfactura = '.$id_factura.' ORDER BY a.id '.$this->getLimitOffset());
+       INNER JOIN facturascli b ON a.factura = b.idfactura
+       INNER JOIN clientes c ON b.codcliente = c.codcliente WHERE b.idfactura = '.$id_factura.' ORDER BY a.id '.$this->getLimitOffset());
    }
 
    public function exists() {

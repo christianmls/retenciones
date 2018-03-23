@@ -8,7 +8,7 @@
 class ventas_retenciones extends fs_controller
 {
   public $mostrar;
-  public $canPPagina = 10; //cantida de elementos por pagina
+  public $canPPagina = 20; //cantida de elementos por pagina
 
    public function __construct()
    {
@@ -44,7 +44,7 @@ class ventas_retenciones extends fs_controller
        if (isset($_GET['p'])){
          $page   = $_GET['p'];
        }
-       $retencionesModel             = new retenciones_factura_compra();
+       $retencionesModel             = new retenciones_factura_venta();
        $retencionesModel->canPPagina = $this->canPPagina;
        return $retencionesModel->getPaginas('?page=compras_retenciones',$p);
    }
