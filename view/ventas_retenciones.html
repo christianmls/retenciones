@@ -62,4 +62,18 @@
       </tbody>
     </table>
   </div>
+
+  <div class="container-fluid">
+     <div class="row">
+        <div class="col-sm-12 text-center">
+           <ul class="pagination">
+              {loop="$fsc->paginas()"}
+              <li{if="$value['actual']"} class="active"{/if}>
+                 <a href="{$value['url']}">{$value['num']}</a>
+              </li>
+              {/loop}
+           </ul>
+        </div>
+     </div>
+  </div>
 {include="footer"}

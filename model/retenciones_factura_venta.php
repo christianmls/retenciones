@@ -11,6 +11,10 @@ class retenciones_factura_venta extends \fs_model {
    public $fecha_emision;
    public $total_retenido;
 
+   public $limit  = 0;
+   public $offset = 0;
+   public $canPPagina = 1;
+
    public function __construct($data = FALSE) {
       parent::__construct('retenciones_factura_venta');
 
@@ -21,12 +25,47 @@ class retenciones_factura_venta extends \fs_model {
       }
    }
 
+   public function getPaginas($url,$actual){
+     $salida = [];
+
+     $this->offset = 0;
+     $this->limit  = 0;
+
+     $resultados   = $this->getAll();
+     $cantidad     = count($resultados);
+     $paginas      = floor($cantidad/$this->canPPagina);
+
+     for ($c=0;$c<$paginas;$c++){
+        $n = $c+1;
+        $e = ['actual' => false, 'num' => $n, 'url' => $url.'&p='.$n];
+        if ($c+1 == $actual){
+          $e['actual'] = true;
+        }
+        array_push($salida,$e);
+     }
+
+     return $salida;
+   }
+
+   private function getLimitOffset(){
+     $t = '';
+
+     if ($this->limit != 0){
+       $t .= 'LIMIT '.$this->limit.' ';
+     }
+
+     if ($this->offset){
+       $t .= 'OFFSET '.$this->offset.' ';
+     }
+     return $t;
+   }
+
    public function getAll(){
      return $this->db->select(
        'SELECT a.total_retenido, a.fecha_emision, c.nombre AS nombre_prov, b.codserie,b.codigo
        FROM retenciones_factura_venta a
        INNER JOIN facturasprov b ON a.factura = b.idfactura
-       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor');
+       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor ORDER BY a.id '.$this->getLimitOffset());
    }
 
    public function getAllByFactura($id_factura){
@@ -34,7 +73,7 @@ class retenciones_factura_venta extends \fs_model {
        'SELECT a.total_retenido, a.fecha_emision, c.nombre AS nombre_prov, b.codserie,b.codigo
        FROM retenciones_factura_venta a
        INNER JOIN facturasprov b ON a.factura = b.idfactura
-       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor WHERE b.idfactura = '.$id_factura);
+       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor WHERE b.idfactura = '.$id_factura.' ORDER BY a.id '.$this->getLimitOffset());
    }
 
    public function exists() {
