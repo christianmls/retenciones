@@ -25,6 +25,20 @@ class retencion_compra_guardar extends fs_controller
     $this->sumaRetenciones = 0;
     $this->sumaSubTotales  = 0;
 
+    //comprobamos si ya hay lineas de retencion de esta factura, de ser así las borramos
+    $lineasCompra  = new retenciones_lineas_compra();
+    $yaHecha = false;
+
+    $this->lineas = $lineasCompra->getAllByFactura($_POST['idFactura']);
+    if (count($this->lineas)>0){
+      $yaHecha = true;
+      foreach ($this->lineas as $linea) {
+        $m = new retenciones_lineas_compra();
+        $m->id = $linea['id'];
+        $m->delete();
+      }
+    }
+
     foreach ($lineasFactura as $k => $v) {
       $this->sumaSubTotales  += $v['pvptotal'];
       $this->sumaRetenciones += $v['pvptotal']/100*$mRetenciones->getPorcentajeRetencion($retenciones[$v['idlinea']]['retencion']);
@@ -41,7 +55,13 @@ class retencion_compra_guardar extends fs_controller
       $lineaRetencion->save();
     }
 
-    $this->total    = $this->sumaSubTotales + $this->sumaRetenciones + $this->sumaIva;
+    $this->total    = $this->sumaRetenciones + $this->sumaIva;
+
+    if ($yaHecha){ // si ya esta hecha borramos la anterior
+      $r = new retenciones_factura_compra();
+      $r->factura = $_POST['idFactura'];
+      $r->deleteByFactura();
+    }
 
     $totalRetencion                 = new retenciones_factura_compra();
     $totalRetencion->factura        = $_POST['idFactura'];
@@ -49,6 +69,7 @@ class retencion_compra_guardar extends fs_controller
     $totalRetencion->fecha_emision  = $factura[0]['fecha'];
     $totalRetencion->total_retenido = $this->total;
     $totalRetencion->save();
+
   }
 
   private function is_assoc($var)

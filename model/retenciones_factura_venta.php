@@ -112,6 +112,11 @@ class retenciones_factura_venta extends \fs_model {
 
    }
 
+   public function deleteByFactura(){
+     $sql = 'DELETE FROM retenciones_factura_venta WHERE factura="'.$this->factura.'"';
+     return $this->db->exec($sql);
+   }
+
    public function save(){
      $sql = 'INSERT INTO retenciones_factura_venta '
              . '(factura,numero,serie,fecha_emision,total_retenido)'

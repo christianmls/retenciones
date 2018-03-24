@@ -64,7 +64,7 @@ class retenciones_lineas_compra extends \fs_model {
 
    public function getAllByFactura($id_factura){
      return $this->db->select(
-       'SELECT a.total AS total_retencion, a.tipo_retencion, a.fecha_emision, b.nombre AS nombre_prov, lf.*
+       'SELECT a.total AS total_retencion, a.tipo_retencion,a.id, a.fecha_emision, b.nombre AS nombre_prov, lf.*
        FROM retenciones_lineas_compra a
        INNER JOIN facturasprov b ON a.factura = b.idfactura
        INNER JOIN lineasfacturasprov lf ON lf.idlinea = a.id_linea
@@ -78,7 +78,8 @@ class retenciones_lineas_compra extends \fs_model {
    }
 
    public function delete(){
-
+     $sql = 'DELETE FROM retenciones_lineas_compra WHERE id='.$this->id;
+     return $this->db->exec($sql);
    }
 
    public function save(){

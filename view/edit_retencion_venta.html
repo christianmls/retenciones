@@ -20,7 +20,7 @@
           </tr>
       </thead>
       <tbody id="lineas_documento">
-        <input type="hidden" name="idFactura" value="{$fsc->factura->idfactura}">
+        <input type="hidden" name="idFactura" value="{$fsc->id_factura}">
         {loop="$fsc->lineas"}
         {$cod_ret = $value['tipo_retencion']}
           <tr id="{$value['idlinea']}" class="linea-factura">

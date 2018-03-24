@@ -26,6 +26,19 @@ class retencion_venta_guardar extends fs_controller
     $this->sumaRetenciones = 0;
     $this->sumaSubTotales  = 0;
 
+    //comprobamos si ya hay lineas de retencion de esta factura, de ser así las borramos
+    $lineasVenta  = new retenciones_lineas_venta();
+    $yaHecha      = false;
+    $this->lineas = $lineasVenta->getAllByFactura($_POST['idFactura']);
+    if (count($this->lineas)>0){
+      $yaHecha = true;
+      foreach ($this->lineas as $linea) {
+        $m = new retenciones_lineas_venta();
+        $m->id = $linea['id'];
+        $m->delete();
+      }
+    }
+
     foreach ($lineasFactura as $k => $v) {
       $this->sumaSubTotales  += $v['pvptotal'];
       $this->sumaRetenciones += $v['pvptotal']/100*$mRetenciones->getPorcentajeRetencion($retenciones[$v['idlinea']]['retencion']);
@@ -42,7 +55,13 @@ class retencion_venta_guardar extends fs_controller
       $lineaRetencion->save();
     }
 
-    $this->total    = $this->sumaSubTotales + $this->sumaRetenciones + $this->sumaIva;
+    $this->total    = $this->sumaRetenciones + $this->sumaIva;
+
+    if ($yaHecha){ // si ya esta hecha borramos la anterior
+      $r = new retenciones_factura_venta();
+      $r->factura = $_POST['idFactura'];
+      $r->deleteByFactura();
+    }
 
     $totalRetencion                 = new retenciones_factura_venta();
     $totalRetencion->factura        = $_POST['idFactura'];
