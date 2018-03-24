@@ -4,6 +4,13 @@
     <h2>Paso 3:</h2>
   </div>
   <p>Retención guardada correctamente.</p>
-  <p>Sumatoria de retenciones: {$fsc->sumaRetenciones}</p>
+  <p>Sumatoria de retenciones: ${$fsc->sumaRetenciones}</p>
+  <p>IVA: ${$fsc->sumaIva}</p>
+  <p>Total: ${$fsc->total}</p>
+</div>
+<div class="container-fluid">
+  <a class="btn btn-sm btn-info" href="index.php?page=compras_retenciones">
+     <span class="hidden-xs">&nbsp;Volver a retenciones</span>
+  </a>
 </div>
 {include="footer"}
