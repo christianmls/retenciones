@@ -37,6 +37,7 @@ class retencion_compra_guardar extends fs_controller
       $lineaRetencion->serie          = $factura[0]['codserie'];
       $lineaRetencion->total          = $v['pvptotal']/100*$mRetenciones->getPorcentajeRetencion($retenciones[$v['idlinea']]['retencion']);
       $lineaRetencion->tipo_retencion = $retenciones[$v['idlinea']]['retencion'];
+      $lineaRetencion->id_linea       = $v['idlinea'];
       $lineaRetencion->save();
     }
 

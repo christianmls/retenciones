@@ -88,7 +88,7 @@ class retenciones_factura_compra extends \fs_model {
 
    public function getAll(){
      return $this->db->select(
-       'SELECT a.total_retenido, a.fecha_emision, c.nombre AS nombre_prov, b.codserie,b.codigo
+       'SELECT a.total_retenido, a.fecha_emision, c.nombre AS nombre_prov, b.codserie,b.codigo,a.factura
        FROM retenciones_factura_compra a
        INNER JOIN facturasprov b ON a.factura = b.idfactura
        INNER JOIN proveedores c ON b.codproveedor = c.codproveedor ORDER BY a.id '.$this->getLimitOffset());

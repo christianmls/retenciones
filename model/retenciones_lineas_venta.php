@@ -12,6 +12,7 @@ class retenciones_lineas_venta extends \fs_model {
    public $total;
    public $tipo_retencion;
    public $porcentaje;
+   public $id_linea;
 
    public function __construct($data = FALSE) {
       parent::__construct('retenciones_lineas_venta');
@@ -78,10 +79,10 @@ class retenciones_lineas_venta extends \fs_model {
 
    public function save(){
      $sql = 'INSERT INTO retenciones_lineas_venta '
-             . '(factura,numero,serie,fecha_emision,total,tipo_retencion,porcentaje)'
+             . '(factura,numero,serie,fecha_emision,total,tipo_retencion,porcentaje,id_linea)'
              . ' VALUES '
              . '('.$this->factura.',"'.$this->numero.'","'.$this->serie.'","'.$this->fecha_emision.'",'.
-             $this->total.',"'.$this->tipo_retencion.'",'.$this->porcentaje.')';
+             $this->total.',"'.$this->tipo_retencion.'",'.$this->porcentaje.',"'.$this->id_linea.'")';
      return $this->db->exec($sql);
    }
 

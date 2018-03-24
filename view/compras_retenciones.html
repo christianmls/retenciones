@@ -50,9 +50,9 @@
            <th class="text-right">
              <div class="btn-group">
                 {if="$fsc->allow_edit"}
-                <button class="btn btn-sm btn-primary" title="Editar">
+                <a class="btn btn-sm btn-primary" title="Editar" href="{$fsc->urlEdit}id_factura={$value['factura']}">
                    <span class="glyphicon glyphicon-pencil"></span>
-                </button>
+                </a>
                 {/if}
              </div>
            </th>
@@ -61,7 +61,7 @@
       </tbody>
     </table>
   </div>
-  
+
   <div class="container-fluid">
      <div class="row">
         <div class="col-sm-12 text-center">

@@ -12,6 +12,7 @@ class retenciones_lineas_compra extends \fs_model {
    public $total;
    public $tipo_retencion;
    public $porcentaje;
+   public $id_linea;
 
    public function __construct($data = FALSE) {
       parent::__construct('retenciones_lineas_compra');
@@ -36,7 +37,6 @@ class retenciones_lineas_compra extends \fs_model {
       $this->total = '';
       $this->tipo_retencion = '';
       $this->porcentaje = '';
-      $this->observaciones = ' ';
    }
 
    public function load_from_data($data) {
@@ -82,10 +82,10 @@ class retenciones_lineas_compra extends \fs_model {
 
    public function save(){
      $sql = 'INSERT INTO retenciones_lineas_compra '
-             . '(factura,numero,serie,fecha_emision,total,tipo_retencion,porcentaje)'
+             . '(factura,numero,serie,fecha_emision,total,tipo_retencion,porcentaje,id_linea)'
              . ' VALUES '
              . '('.$this->factura.',"'.$this->numero.'","'.$this->serie.'","'.$this->fecha_emision.'",'.
-             $this->total.',"'.$this->tipo_retencion.'",'.$this->porcentaje.')';
+             $this->total.',"'.$this->tipo_retencion.'",'.$this->porcentaje.',"'.$this->id_linea.'")';
      return $this->db->exec($sql);
    }
 

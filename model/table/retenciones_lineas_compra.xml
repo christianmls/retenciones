@@ -22,5 +22,7 @@
 
   <columna> <nombre>porcentaje</nombre> <tipo>double</tipo> <nulo>NO</nulo> </columna>
 
+  <columna> <nombre>id_linea</nombre> <tipo>integer</tipo> <nulo>NO</nulo></columna>
+
   <restriccion> <nombre>retenciones_lineas_compra_pkey</nombre> <consulta>PRIMARY KEY (id)</consulta></restriccion>
 </tabla>

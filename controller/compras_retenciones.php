@@ -9,6 +9,7 @@ class compras_retenciones extends fs_controller
 {
   public $mostrar;
   public $canPPagina = 20; //cantida de elementos por pagina
+  public $urlEdit = '?page=edit_retencion_compra&';
 
   public function __construct()
   {
