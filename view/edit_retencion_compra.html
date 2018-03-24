@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
   <div class="page-header">
-    <h2>Editar recargos:</h2>
+    <h2>Editar retenciones:</h2>
   </div>
 
   <div class="table-responsive">
@@ -22,6 +22,7 @@
       <tbody id="lineas_documento">
         <input type="hidden" name="idFactura" value="{$fsc->factura->idfactura}">
         {loop="$fsc->lineas"}
+        {$cod_ret = $value['tipo_retencion']}
           <tr id="{$value['idlinea']}" class="linea-factura">
               <td class="text-left descripcion">{$value['descripcion']}</td>
               <td class="text-center cantidad">{$value['cantidad']}   </td>
@@ -31,7 +32,7 @@
               <td class="text-center">
                 <select id="{$value['idlinea']}-retencion" data-id="{$value['idlinea']}" name="retenciones[{$value['idlinea']}][retencion]" class="form-control retencion">
                   {loop="$fsc->reten"}
-                  <option value="{$value['codretencion']}" data-porcentaje="{$value['porcentaje']}">{$value['descripcion']}</option>
+                  <option {if="$cod_ret == $value['codretencion']"} selected=true {/if} value="{$value['codretencion']}" data-porcentaje="{$value['porcentaje']}">{$value['descripcion']}</option>
                   {/loop}
                 </select>
               </td>

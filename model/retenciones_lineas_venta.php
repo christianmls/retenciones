@@ -33,9 +33,11 @@ class retenciones_lineas_venta extends \fs_model {
 
    public function getAllByFactura($id_factura){
      return $this->db->select(
-       'SELECT a.total AS total_retencion,b.nombrecliente, a.tipo_retencion, b.fecha
+       'SELECT a.total AS total_retencion,b.nombrecliente, a.tipo_retencion, b.fecha,lf.*
        FROM retenciones_lineas_venta a
-       INNER JOIN facturascli b ON a.factura = b.idfactura WHERE b.idfactura = '.$id_factura);
+       INNER JOIN lineasfacturascli lf ON lf.idlinea = a.id_linea
+       INNER JOIN facturascli b ON a.factura = b.idfactura
+       WHERE b.idfactura = '.$id_factura);
    }
 
    public function exists() {

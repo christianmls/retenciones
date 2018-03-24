@@ -64,10 +64,11 @@ class retenciones_lineas_compra extends \fs_model {
 
    public function getAllByFactura($id_factura){
      return $this->db->select(
-       'SELECT a.total AS total_retencion, a.tipo_retencion, a.fecha_emision, c.nombre AS nombre_prov
+       'SELECT a.total AS total_retencion, a.tipo_retencion, a.fecha_emision, b.nombre AS nombre_prov, lf.*
        FROM retenciones_lineas_compra a
        INNER JOIN facturasprov b ON a.factura = b.idfactura
-       INNER JOIN proveedores c ON b.codproveedor = c.codproveedor WHERE b.idfactura = '.$id_factura);
+       INNER JOIN lineasfacturasprov lf ON lf.idlinea = a.id_linea
+       WHERE b.idfactura = '.$id_factura);
    }
 
 
